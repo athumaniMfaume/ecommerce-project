@@ -12,7 +12,7 @@
           <div class="box">
             
               <div class="img-box">
-                <img src="{{asset('products')}}/{{$products->image}}" alt="">
+                <img src="{{asset('/images')}}/{{$products->image}}" alt="">
               </div>
               <div class="detail-box">
                 <h6>

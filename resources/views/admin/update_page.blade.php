@@ -116,7 +116,7 @@
                 </div>
                 <div class="input_deg">
                 	<label>Current image</label>
-                  <img width="150" src="/products/{{$data->image}}">
+                  <img width="150" src="/images/{{$data->image}}">
                 </div>
                 <div class="input_deg">
                   <label>New image</label>

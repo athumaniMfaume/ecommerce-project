@@ -121,7 +121,7 @@
   		<tr>
   			<td>{{$cart->product->title}}</td>
   			<td>{{$cart->product->price}}</td>
-  			<td><img width="150" src="/products/{{$cart->product->image}}"></td>
+  			<td><img width="150" src="/images/{{$cart->product->image}}"></td>
   			<td><a class="btn btn-danger"  href="{{url('delete_cart', $cart->id)}}">Remove</a></td>
   		</tr>
 

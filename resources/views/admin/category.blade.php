@@ -68,9 +68,9 @@
               <form action="{{url('add_category')}}" method="post">
                 @csrf
                 <div>
-                    <input type="text" name="category">
+                    <input type="text" name="category_name">
                     <input class="btn btn-primary" type="submit" value="Add Category">
-                    @error('category')
+                    @error('category_name')
                         <p class="text-danger">{{$message}}</p>
                     @enderror
                 </div>   
@@ -98,6 +98,9 @@
                
              </table>
            </div> 
+           <div class="div_deg">
+             
+           </div>
           </div>
       </div>
     </div>

@@ -105,7 +105,7 @@
                 <td>{{$data->product->title}}</td>
                 <td>{{$data->product->price}}</td>
                 <td>
-                  <img width="100" src="products/{{$data->product->image}}">
+                  <img width="100" src="/images/{{$data->product->image}}">
                 </td>
                 <td>
                   @if($data->status == 'in progress')

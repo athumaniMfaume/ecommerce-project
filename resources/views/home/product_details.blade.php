@@ -44,7 +44,7 @@
           <div class="box">
             
               <div class="div_center">
-                <img width="200" src="/products/{{$data->image}}" alt="">
+                <img width="200" src="/images/{{$data->image}}" alt="">
               </div>
               <div class="detail-box">
                 <h6>

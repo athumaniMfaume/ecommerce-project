@@ -96,7 +96,7 @@
         <td>{{$order->product->title}}</td>
         <td>{{$order->product->price}}</td>
         <td>{{$order->status}}</td>
-        <td><img height="100" width="100" src="/products/{{$order->product->image}}"></td>
+        <td><img height="100" width="100" src="/images/{{$order->product->image}}"></td>
         
       </tr>
       @endforeach

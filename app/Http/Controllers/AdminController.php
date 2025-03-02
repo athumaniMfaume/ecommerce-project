@@ -11,7 +11,7 @@ class AdminController extends Controller
 {
     public function view_category()
     {   
-        $data = Category::all();
+        $data= Category::all();
         return view('admin.category', compact('data'));
     }
 
@@ -20,11 +20,11 @@ class AdminController extends Controller
 
         $request->validate([
            
-            'quantity' => 'required',
+            'category_name' => 'required',
             
         ]);
         $category = new Category;
-        $category->category_name = $request->category;
+        $category->category_name = $request->category_name;
         $category->save();
         //toastr()->closeButton()->closeButton(5000)->addInfo('Category Added Successfuly');
        // toastr()->closeButton()->closeButton(5000)->addError('Category Added Successfuly');
@@ -139,7 +139,7 @@ class AdminController extends Controller
 
         if ($image) {
             $imagename = time().'.'.$image->getClientOriginalExtension();
-            $request->image->move(public_path('products'), $imagename);
+            $request->image->move(public_path('/images'), $imagename);
             $data->image = $imagename;
         }
         $data->save();
