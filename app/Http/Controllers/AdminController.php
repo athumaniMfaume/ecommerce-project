@@ -5,13 +5,40 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Order;
 use Barryvdh\DomPDF\Facade\pdf;
+use App\Mail\MessageSent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
+public function sendMessage(Request $request)
+{
+    // Validate the form data
+    $validated = $request->validate([
+        'name' => 'required|string',
+        'email' => 'required|email',
+        'phone' => 'required|string',
+        'message' => 'required|string',
+    ]);
+
+
+
+    // Send the email
+Mail::to($validated['email'])->send(new MessageSent(
+    $validated['name'],
+    $validated['email'],
+    $validated['phone'],
+    $validated['message']
+));
+
+    // Return a success message or redirect
+    toastr()->timeOut(10000)->closeButton()->addSuccess('Email has been sent successfully');
+    return redirect()->back();
+}
+
     public function view_category()
     {   
-        $data= Category::all();
+        $data= Category::paginate(3);
         return view('admin.category', compact('data'));
     }
 
@@ -20,16 +47,13 @@ class AdminController extends Controller
 
         $request->validate([
            
-            'category_name' => 'required',
+            'category_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
             
         ]);
         $category = new Category;
         $category->category_name = $request->category_name;
         $category->save();
-        //toastr()->closeButton()->closeButton(5000)->addInfo('Category Added Successfuly');
-       // toastr()->closeButton()->closeButton(5000)->addError('Category Added Successfuly');
         toastr()->timeOut(10000)->closeButton()->addSuccess('Category Added Successfuly');
-        //toastr()->closeButton()->addWarning('Category Added Successfuly');
         return redirect()->back();
     }
 
@@ -49,6 +73,12 @@ class AdminController extends Controller
 
     public function update_category(Request $request, $id)
     {
+
+        $request->validate([
+           
+            'category' => 'sometimes|regex:/^[a-zA-Z\s]+$/|max:255',
+            
+        ]);
         $data = Category::find($id);
         $data->category_name = $request->category;
         $data->save();
@@ -60,25 +90,17 @@ class AdminController extends Controller
     public function add_product(Request $request)
     {
         $category = Category::all();
-       // $category->category_name = $request->category;
-        //$category->save();
-        //toastr()->closeButton()->closeButton(5000)->addInfo('Category Added Successfuly');
-       // toastr()->closeButton()->closeButton(5000)->addError('Category Added Successfuly');
-       // toastr()->timeOut(10000)->closeButton()->addSuccess('Category Added Successfuly');
-        //toastr()->closeButton()->addWarning('Category Added Successfuly');
-       // return redirect()->back();
-
         return view('admin.add_product', compact('category'));
     }
 
     public function upload_product(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'price' => 'required',
+            'title' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
+            'price' => 'required | numeric',
             'image' => 'required|mimes:jpeg,jpg,png,gif|max:10000',
-            'description' => 'required',
-            'quantity' => 'required',
+            'description' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
+            'quantity' => 'required | numeric',
             'category' => 'required',
         ]);
         $data = new Product;
@@ -129,6 +151,19 @@ class AdminController extends Controller
 
     public function edit_product(Request $request, $id)
     {
+
+         $request->validate([
+            'title' => 'sometimes|regex:/^[a-zA-Z\s]+$/|max:255',
+            'price' => 'sometimes | numeric',
+            'image' => 'sometimes|mimes:jpeg,jpg,png,gif|max:10000',
+            'description' => 'sometimes|regex:/^[a-zA-Z\s]+$/|max:255',
+            'quantity' => 'sometimes | numeric',
+            'category' => 'sometimes',
+        ]);
+
+
+
+
         $data = Product::find($id);
         $data->title = $request->title;
         $data->description = $request->description;
@@ -149,6 +184,9 @@ class AdminController extends Controller
 
     public function product_search(Request $request)
     {
+        $request->validate([
+            'search' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
+        ]);
         $search = $request->search;
         $product = Product::where('title','LIKE','%'.$search.'%')->
                    orWhere('category','LIKE','%'.$search.'%')->paginate(3);
@@ -158,8 +196,22 @@ class AdminController extends Controller
 
     public function view_order()
     {   
-        $data = Order::all();
-        return view('admin.order', compact('data'));
+        $datas = Order::paginate(5);
+        return view('admin.order', compact('datas'));
+    }
+
+    public function order_search(Request $request)
+    {
+        $request->validate([
+            'search' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
+        ]);
+        $search = $request->search;
+        $datas = Order::where('name','LIKE','%'.$search.'%')->
+                   orWhere('rec_address','LIKE','%'.$search.'%')->
+                   orWhere('phone','LIKE','%'.$search.'%')
+                   ->paginate(5);
+        return view('admin.order',compact('datas'));
+
     }
 
      public function on_the_way($id)
@@ -178,12 +230,21 @@ class AdminController extends Controller
         return redirect('/view_order');
     }
 
-     public function print_pdf($id)
-    {   
-        $data = Order::find($id);
-        $pdf = Pdf::loadView('admin.invoice', compact('data'));
-        return $pdf->download('invoice.pdf');
+    public function print_pdf($id)
+     {   
+       $data = Order::find($id);
+       $imagePath = public_path('images/' . $data->product->image);
+    
+       // Generate the filename: CustomerName_Invoice.pdf
+       $fileName = str_replace(' ', '_', $data->name) . '_Invoice.pdf';
+
+       // Generate the PDF
+       $pdf = Pdf::loadView('admin.invoice', compact('data', 'imagePath'));
+
+       // Return the PDF as a download with the custom filename
+       return $pdf->download($fileName);
     }
+
 
     
 

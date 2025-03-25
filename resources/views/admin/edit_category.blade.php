@@ -70,9 +70,14 @@
                 @csrf
                 <input type="text" name="category" value="{{$data->category_name}}">
                 <input class="btn btn-primary" type="submit" name="update category" value="Update Category">
-              </form>
+                  @error('category')
+                  <p class="text-danger">{{$message}}</p>
+              @enderror
+              </form><br>
+
+
             </div>
-          
+
           </div>
       </div>
     </div>

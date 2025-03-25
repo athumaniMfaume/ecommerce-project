@@ -85,12 +85,12 @@
                 <th> Delete</th>
               </tr>
 
-              @foreach($data as $data)
+              @foreach($data as $datas)
               <tr>
               
-                <td>{{$data->category_name}}</td>
-                <td><a class="btn btn-success" href="{{url('edit_category', $data->id)}}">Edit</a></td>
-                <td><a class="btn btn-danger" onclick="confirmation(event)" href="{{url('delete_category', $data->id)}}">Delete</a></td>
+                <td>{{$datas->category_name}}</td>
+                <td><a class="btn btn-success" href="{{url('edit_category', $datas->id)}}">Edit</a></td>
+                <td><a class="btn btn-danger" onclick="confirmation(event)" href="{{url('delete_category', $datas->id)}}">Delete</a></td>
               </tr>
 
               @endforeach
@@ -99,8 +99,8 @@
              </table>
            </div> 
            <div class="div_deg">
-             
-           </div>
+             {{$data->onEachSide(1)->links()}}
+           </div> 
           </div>
       </div>
     </div>

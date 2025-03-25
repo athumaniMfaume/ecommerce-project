@@ -24,7 +24,7 @@ class HomeController extends Controller
 
     public function home()
     {
-    	$product = Product::all();
+    	$product = Product::latest()->paginate(4);
 
         if (Auth::id()) {
         	$user = Auth::user();
@@ -44,9 +44,97 @@ class HomeController extends Controller
         return view('home.index', compact('product', 'count'));
     }
 
+       public function why()
+    {
+        $product = Product::latest()->paginate(4);
+
+        if (Auth::id()) {
+            $user = Auth::user();
+            $userid = $user->id;
+
+            $count = Cart::where('user_id',$userid)->count();
+            
+        }
+
+        else{
+            
+            $count = '';
+            
+        }
+
+        
+        return view('home.why_page', compact('product', 'count'));
+    }
+
+        public function contact()
+    {
+        $product = Product::latest()->paginate(4);
+
+        if (Auth::id()) {
+            $user = Auth::user();
+            $userid = $user->id;
+
+            $count = Cart::where('user_id',$userid)->count();
+            
+        }
+
+        else{
+            
+            $count = '';
+            
+        }
+
+        
+        return view('home.contact_page', compact('product', 'count'));
+    }
+
+       public function testmonial()
+    {
+        $product = Product::latest()->paginate(4);
+
+        if (Auth::id()) {
+            $user = Auth::user();
+            $userid = $user->id;
+
+            $count = Cart::where('user_id',$userid)->count();
+            
+        }
+
+        else{
+            
+            $count = '';
+            
+        }
+
+        
+        return view('home.testmonial_page', compact('product', 'count'));
+    }
+
+        public function shop()
+    {
+        $product = Product::latest()->paginate(8);
+
+        if (Auth::id()) {
+            $user = Auth::user();
+            $userid = $user->id;
+
+            $count = Cart::where('user_id',$userid)->count();
+            
+        }
+
+        else{
+            
+            $count = '';
+            
+        }
+
+        
+        return view('home.shop', compact('product', 'count'));
+    }
+
     public function login_home()
     {
-    	$product = Product::all();
+    	$product = Product::paginate(4);
 
     	if (Auth::id()) {
         	$user = Auth::user();
@@ -99,14 +187,6 @@ class HomeController extends Controller
 
     public function mycart()
     {
-    	//$product_id = $id;
-    	//$user = Auth::user();
-    	//$user_id = $user->id;
-    	//$data = new Cart;
-    	//$data->user_id = $user_id;
-    	//$data->product_id = $product_id;
-    	//$data->save();
-    	//toastr()->timeOut(10000)->closeButton()->addSuccess('Product Added to Cart Successfuly');
     	if (Auth::id()) {
         	$user = Auth::user();
     	    $userid = $user->id;
@@ -154,7 +234,7 @@ class HomeController extends Controller
         		$order->user_id = $userid;
         		$order->product_id = $carts->product_id;
         		$order->save();
-        		//toastr()->timeOut(10000)->closeButton()->addSuccess('Cart Delete Successfuly');
+        		
         		
         	}
 
@@ -165,7 +245,7 @@ class HomeController extends Controller
                 $data = Cart::find($remove->id);
         	
         		$data->delete();
-        		//toastr()->timeOut(10000)->closeButton()->addSuccess('Cart Delete Successfuly');
+        		
         		
         	}
 

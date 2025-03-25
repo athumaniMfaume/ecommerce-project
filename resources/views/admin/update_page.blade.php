@@ -90,29 +90,45 @@
                 <div class="input_deg">
                 	<label>Product Title</label>
                 	<input type="text" name="title" value="{{$data->title}}" >
+                                     @error('title')
+                     <p class="text-danger">{{$message}}</p>
+                  @enderror
                 </div>
                 <div class="input_deg">
                 	<label>Description</label>
                 	<textarea name="description"  required>{{$data->description}}</textarea>
+                                     @error('description')
+                     <p class="text-danger">{{$message}}</p>
+                  @enderror
                 </div>
                 <div class="input_deg">
                 	<label>Price</label>
                 	<input type="text" name="price" value="{{$data->price}}" >
+                                     @error('price')
+                     <p class="text-danger">{{$message}}</p>
+                  @enderror
                 </div>
                 <div class="input_deg">
                 	<label>Quantity</label>
                 	<input type="number" name="quantity" value="{{$data->quantity}}" >
+                                     @error('quantity')
+                     <p class="text-danger">{{$message}}</p>
+                  @enderror
                 </div>
                 <div class="input_deg">
                 	<label>Category</label>
                 	<select name="category" required>
-                		<option value="{{$data->category}}">{{$data->category}}</option>
+                    
+                	
 
                     @foreach($category as $category)
-                    <option value="{{$category->category_name}}">{{$category->category_name}}</option>
+                    <option value="{{$category->category_name}}" {{$category->category_name == $data->category ? 'selected' : ''}}>{{$category->category_name}}</option>
                     @endforeach
                 		
                 	</select>
+                                     @error('category')
+                     <p class="text-danger">{{$message}}</p>
+                  @enderror
                 </div>
                 <div class="input_deg">
                 	<label>Current image</label>
@@ -121,6 +137,9 @@
                 <div class="input_deg">
                   <label>New image</label>
                   <input type="file" name="image"   >
+                                     @error('image')
+                     <p class="text-danger">{{$message}}</p>
+                  @enderror
                 </div>
                 <div class="input_deg">
                 	<input class="btn btn-success" type="submit" value="Update Product">

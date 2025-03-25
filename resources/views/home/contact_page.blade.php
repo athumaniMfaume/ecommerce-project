@@ -10,28 +10,17 @@
     <!-- header section strats -->
     @include('home.header')
     <!-- end header section -->
-     
-    <!-- slider section -->
-    @include('home.slider')
-    <!-- end slider section -->
+
   </div>
+  <br>
   <!-- end hero area -->
 
-  <!-- shop section -->
-  @include('home.product')
-  <!-- end shop section -->
-
-    <!-- why section -->
-  @include('home.why')
-  <!-- end why section -->
 
   <!-- testmonial section -->
-  @include('home.testmonial')
+  @include('home.contact')
   <!-- end testmonial section -->
 
-  <!-- contact section -->
-  @include('home.contact')
-  <!-- end info section -->
+
 
     <!-- footer section -->
     @include('home.footer')

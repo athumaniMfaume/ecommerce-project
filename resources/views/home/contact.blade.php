@@ -3,7 +3,7 @@
       <div class="heading_container ">
         <h2 class="">
           Contact Us
-        </h2>
+        </h2> 
       </div>
     </div>
     <div class="container container-bg">
@@ -16,21 +16,35 @@
           </div>
         </div>
         <div class="col-md-6 col-lg-5 px-0">
-          <form action="#">
+          <form action="{{ url('/send-message') }}" method="POST">
+            @csrf
             <div>
-              <input type="text" placeholder="Name" />
+              <input type="text" name="name" placeholder="Name" />
+              @error('name')
+                <p class="text-danger"> {{$message}} </p>
+              @enderror
             </div>
             <div>
-              <input type="email" placeholder="Email" />
+              <input type="email" name="email" placeholder="Email" />
+                            @error('email')
+                <p class="text-danger"> {{$message}} </p>
+              @enderror
+            </div>
+
+            <div>
+              <input type="text" name="phone" placeholder="Phone" />
+                            @error('phone')
+                <p class="text-danger"> {{$message}} </p>
+              @enderror
             </div>
             <div>
-              <input type="text" placeholder="Phone" />
-            </div>
-            <div>
-              <input type="text" class="message-box" placeholder="Message" />
+              <input type="text" name="message" class="message-box" placeholder="Message" />
+                            @error('message')
+                <p class="text-danger"> {{$message}} </p>
+              @enderror
             </div>
             <div class="d-flex ">
-              <button>
+              <button type="submit">
                 SEND
               </button>
             </div>

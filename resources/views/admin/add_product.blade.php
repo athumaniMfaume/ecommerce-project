@@ -88,33 +88,51 @@
               	@csrf
                 <div class="input_deg">
                 	<label>Product Title</label>
-                	<input type="text" name="title" required="">
+                	<input type="text" name="title">
+                  @error('title')
+                     <p class="text-danger">{{$message}}</p>
+                  @enderror   
                 </div>
                 <div class="input_deg">
                 	<label>Description</label>
-                	<textarea name="description" required></textarea>
+                	<textarea name="description" ></textarea>
+                                    @error('description')
+                     <p class="text-danger">{{$message}}</p>
+                  @enderror
                 </div>
                 <div class="input_deg">
                 	<label>Price</label>
-                	<input type="text" name="price" required="">
+                	<input type="text" name="price" >
+                                    @error('price')
+                     <p class="text-danger">{{$message}}</p>
+                  @enderror
                 </div>
                 <div class="input_deg">
                 	<label>Quantity</label>
-                	<input type="number" name="quantity" required="">
+                	<input type="number" name="quantity" >
+                                    @error('quantity')
+                     <p class="text-danger">{{$message}}</p>
+                  @enderror
                 </div>
                 <div class="input_deg">
                 	<label>Category</label>
-                	<select name="category" required>
-                		<option>Select Category</option>
+                	<select name="category">
+                		<option disabled selected>Select Category</option>
                 		@foreach($category as $category)
 
                 		<option value="{{$category->category_name}}">{{$category->category_name}}</option>
                 		@endforeach
                 	</select>
+                                    @error('category')
+                     <p class="text-danger">{{$message}}</p>
+                  @enderror
                 </div>
                 <div class="input_deg">
                 	<label>Image</label>
-                	<input type="file" name="image" required="">
+                	<input type="file" name="image" >
+                                    @error('image')
+                     <p class="text-danger">{{$message}}</p>
+                  @enderror
                 </div>
                 <div class="input_deg">
                 	<input class="btn btn-success" type="submit" value="Add Product">

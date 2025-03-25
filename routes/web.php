@@ -4,8 +4,24 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+
+Route::get('test-email', function () {
+    Mail::raw('This is a test email', function ($message) {
+        $message->to('your-email@example.com')
+                ->subject('Test Email from Laravel');
+    });
+
+    return 'Test email sent!';
+});
+
 
 Route::get('/', [HomeController::class,'home']);
+Route::get('/shop', [HomeController::class,'shop']);
+Route::get('/testmonial', [HomeController::class,'testmonial']);
+Route::get('/why', [HomeController::class,'why']);
+Route::get('/contact', [HomeController::class,'contact']);
+
 
 Route::get('/dashboard', [HomeController::class,'login_home'])->
 middleware(['auth', 'verified'])->name('dashboard');
@@ -26,6 +42,8 @@ require __DIR__.'/auth.php';
 route::get('admin/dashboard', [HomeController::class,'index'])->middleware(['auth','admin']);
 
 route::get('view_category', [AdminController::class,'view_category'])->middleware(['auth','admin']);
+
+Route::post('/send-message', [AdminController::class, 'sendMessage']);
 
 
 route::post('add_category', [AdminController::class,'add_category'])->middleware(['auth','admin']);
@@ -66,6 +84,8 @@ Route::controller(HomeController::class)->group(function(){
 });
 
 route::get('view_order', [AdminController::class,'view_order'])->middleware(['auth','admin']);
+
+route::get('order_search', [AdminController::class,'order_search'])->middleware(['auth','admin']);
 
 route::get('on_the_way/{id}', [AdminController::class,'on_the_way'])->middleware(['auth','admin']);
 
