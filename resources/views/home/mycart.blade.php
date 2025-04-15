@@ -89,8 +89,10 @@
     </div>
 
     <div class="container">
-        @if($cart->isEmpty())
-            <h3 class="text-center">No items in the cart</h3>
+        @if($carts->isEmpty())
+            <h3 class="text-center">No items in the cart</h3><br>
+            <center> <a class="btn btn-primary text-center" href="{{url('shop')}}">View Product </a></center>
+
         @else
             <div class="order_form">
                 <form action="{{url('confirm_order')}}" method="post">
@@ -107,8 +109,8 @@
                     <button type="submit" class="btn btn-primary">Cash On Delivery</button>
                     <a class="btn btn-success" href="{{url('stripe')}}">Pay Using Card</a>
                 </form>
-            </div>
-
+            </div></div>
+             <div class="container">
             <table class="table_deg">
                 <tr>
                     <th>Product Title</th>
@@ -119,7 +121,7 @@
 
                 <?php $value = 0; ?>
 
-                @foreach($cart as $cart)
+                @foreach($carts as $cart)
                     <tr>
                         <td>{{$cart->product->title}}</td>
                         <td>${{$cart->product->price}}</td>
@@ -131,6 +133,9 @@
             </table>
 
             <div class="cart_value">Total value of cart: ${{$value}}</div>
+               <div class="d-flex justify-content-center mt-4">
+            {{ $carts->links() }}
+        </div>
         @endif
     </div>
 

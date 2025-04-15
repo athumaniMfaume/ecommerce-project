@@ -193,9 +193,9 @@ class HomeController extends Controller
 
     	    $count = Cart::where('user_id',$userid)->count();
         	
-        	$cart = Cart::where('user_id',$userid)->get();
+        	$carts = Cart::where('user_id',$userid)->paginate(4);
         }
-        return view('home.mycart', compact('count', 'cart'));
+        return view('home.mycart', compact('count', 'carts'));
     }
 
     public function delete_cart($id)
@@ -260,8 +260,8 @@ class HomeController extends Controller
 
     	$user = Auth::user()->id;
     	$count = Cart::where('user_id',$user)->get()->count();
-    	$order = Order::where('user_id',$user)->get();
-        return view('home.order', compact('count', 'order'));
+    	$orders = Order::where('user_id',$user)->paginate(4);
+        return view('home.order', compact('count', 'orders'));
     }
 
     public function stripe()

@@ -20,7 +20,7 @@
 
     
 
-    <h1>Ecommerce Payment System</h1>
+   <center> <h1>Ecommerce Payment System</h1> </center>
 
     
 

@@ -1,7 +1,7 @@
 <section class="contact_section ">
     <div class="container px-0">
-      <div class="heading_container ">
-        <h2 class="">
+      <div class="heading_container heading_center">
+        <h2>
           Contact Us
         </h2> 
       </div>

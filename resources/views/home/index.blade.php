@@ -3,6 +3,25 @@
 
 <head>
     @include('home.css')
+        <style>
+        .btn-box {
+            margin-top: 20px;
+        }
+
+        .btn-box a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #ff6f61;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .btn-box a:hover {
+            background: #e65a50;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,6 +38,9 @@
 
   <!-- shop section -->
   @include('home.product')
+      <div class="btn-box heading_container heading_center">
+         <a href="{{ url('shop') }}">View All Products</a>
+      </div>
   <!-- end shop section -->
 
     <!-- why section -->
