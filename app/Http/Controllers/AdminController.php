@@ -47,7 +47,7 @@ Mail::to($validated['email'])->send(new MessageSent(
 
         $request->validate([
            
-            'category_name' => 'required|regex:/^[a-zA-Z\s]+$/|max:255',
+            'category_name' => 'required|regex:/^[a-zA-Z\s]+$/|unique:categories,category_name|max:255',
             
         ]);
         $category = new Category;
@@ -76,7 +76,7 @@ Mail::to($validated['email'])->send(new MessageSent(
 
         $request->validate([
            
-            'category' => 'sometimes|regex:/^[a-zA-Z\s]+$/|max:255',
+            'category' => 'sometimes|regex:/^[a-zA-Z\s]+$/|max:255|unique:categories,category_name,'.$id,
             
         ]);
         $data = Category::find($id);
