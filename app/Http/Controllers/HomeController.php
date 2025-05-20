@@ -249,7 +249,7 @@ class HomeController extends Controller
         		
         	}
 
-
+    toastr()->timeOut(10000)->closeButton()->addSuccess('Order Sent Successfuly');
         	return redirect()->back();
         
     }
@@ -263,6 +263,23 @@ class HomeController extends Controller
     	$orders = Order::where('user_id',$user)->paginate(4);
         return view('home.order', compact('count', 'orders'));
     }
+
+public function delete_myorders($id)
+{
+    $user = Auth::user()->id;
+
+    $order = Order::where('user_id', $user)->where('id', $id)->first();
+
+    if ($order) {
+        $order->delete();
+        toastr()->timeOut(10000)->closeButton()->addSuccess('Order deleted successfully');
+    } else {
+        toastr()->timeOut(10000)->closeButton()->addError('Order not found or access denied');
+    }
+
+    return redirect()->back();
+}
+
 
     public function stripe()
     {
@@ -292,11 +309,10 @@ class HomeController extends Controller
 
       
 
-        Session::flash('success', 'Payment successful!');
+            toastr()->timeOut(10000)->closeButton()->addSuccess('Payment Successfuly');
 
               
 
-        return back();
-
+        return redirect()->back();
     }
 }

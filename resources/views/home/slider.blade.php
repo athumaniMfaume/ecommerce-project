@@ -12,16 +12,16 @@
                         Gift Shop
                       </h1>
                       <p>
-                        Sequi perspiciatis nulla reiciendis, rem, tenetur impedit, eveniet non necessitatibus error distinctio mollitia suscipit. Nostrum fugit doloribus consequatur distinctio esse, possimus maiores aliquid repellat beatae cum, perspiciatis enim, accusantium perferendis.
-                      </p>
-                      <a href="">
+                          Shop quality products you can trust. Fast delivery, secure checkout, and unbeatable value—made to meet your everyday needs.
+                       </p>
+                      <a href="{{url('/contact')}}">
                         Contact Us
                       </a>
                     </div>
                   </div>
                   <div class="col-md-5 ">
                     <div class="img-box">
-                      <img style="width:600px" src="images/image3.jpeg" alt="" />
+                      <img style="width:400px" src="images/image3.jpeg" alt="" />
                     </div>
                   </div>
                 </div>

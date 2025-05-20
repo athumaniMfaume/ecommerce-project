@@ -102,6 +102,7 @@
                     <th>Price</th>
                     <th>Delivery Status</th>
                     <th>Image</th>
+                    <th>Action</th>
                 </tr>
 
                 @foreach($orders as $order)
@@ -110,6 +111,7 @@
                     <td>{{$order->product->price}}</td>
                     <td>{{$order->status}}</td>
                     <td><img height="100" width="100" src="/images/{{$order->product->image}}"></td>
+                    <td><a class="btn btn-danger" onclick="confirm('are you want to Delete this order?')" href="{{url('delete_myorder', $order->id)}}">Remove</a></td>
                 </tr>
                 @endforeach
             </table>
@@ -118,6 +120,24 @@
         </div>
         @endif
     </div>
+
+        <script type="text/javascript">
+        function confirmation(ev) {
+            ev.preventDefault();
+            var urlToRedirect = ev.currentTarget.getAttribute('href');
+            swal({
+                title: "Are You Sure To Delete This",
+                text: "This action is permanent",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willCancel) => {
+                if (willCancel) {
+                    window.location.href = urlToRedirect;
+                }
+            });
+        }
+    </script>
 
     <br>
 

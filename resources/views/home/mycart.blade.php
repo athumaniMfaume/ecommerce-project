@@ -126,7 +126,7 @@
                         <td>{{$cart->product->title}}</td>
                         <td>${{$cart->product->price}}</td>
                         <td><img width="100" src="/images/{{$cart->product->image}}"></td>
-                        <td><a class="btn btn-danger" href="{{url('delete_cart', $cart->id)}}">Remove</a></td>
+                        <td><a class="btn btn-danger" onclick="confirm('are you want to Delete this order?')" href="{{url('delete_cart', $cart->id)}}">Remove</a></td>
                     </tr>
                     <?php $value += $cart->product->price; ?>
                 @endforeach

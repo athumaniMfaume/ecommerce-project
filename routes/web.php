@@ -3,25 +3,20 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 
-Route::get('test-email', function () {
-    Mail::raw('This is a test email', function ($message) {
-        $message->to('your-email@example.com')
-                ->subject('Test Email from Laravel');
-    });
-
-    return 'Test email sent!';
-});
 
 
+
+// Route for sending a message (e.g., from contact form on frontend)
+Route::post('/send-message', [ContactController::class, 'sendMessage'])->name('contact.send');
 Route::get('/', [HomeController::class,'home']);
 Route::get('/shop', [HomeController::class,'shop']);
 Route::get('/testmonial', [HomeController::class,'testmonial']);
 Route::get('/why', [HomeController::class,'why']);
 Route::get('/contact', [HomeController::class,'contact']);
-Route::post('/send-message', [AdminController::class, 'sendMessage']);
 Route::get('product_details/{id}', [HomeController::class,'product_details']);
 
 
@@ -47,6 +42,8 @@ route::get('mycart', [HomeController::class,'mycart']);
 
 route::get('delete_cart/{id}', [HomeController::class,'delete_cart']);
 
+route::get('delete_myorder/{id}', [HomeController::class,'delete_myorders']);
+
 route::post('confirm_order', [HomeController::class,'confirm_order']);
 
 Route::get('stripe',[HomeController::class, 'stripe']);
@@ -55,6 +52,13 @@ Route::post('stripe',[HomeController::class, 'stripePost'])->name('stripe.post')
 
 
 Route::middleware(['auth', 'admin'])->group(function () {
+
+// Admin view to list all messages
+Route::get('/admin/messages', [ContactController::class, 'viewMessages'])->name('admin.messages');
+
+// Admin route to delete a message
+Route::get('/admin/delete-message/{id}', [ContactController::class, 'deleteMessage'])->name('admin.deleteMessage');
+
    Route::get('admin/dashboard', [HomeController::class,'index']);
 
 Route::get('view_category', [AdminController::class,'view_category']);
