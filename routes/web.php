@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::middleware(['auth', 'customer'])->group(function () {
+Route::middleware(['auth', 'verified', 'customer'])->group(function () {
     Route::get('/dashboard', [HomeController::class,'login_home'])->name('dashboard');
 
 Route::get('myorders', [HomeController::class,'myorders']);

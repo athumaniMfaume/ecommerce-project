@@ -25,7 +25,7 @@
               <div class="info d-flex align-items-center">
                 <div class="content">
                   <div class="logo">
-                    <h1>Dashboard</h1>
+                    <h1>Register</h1>
                   </div>
                   <p>Join us and manage your tasks easily.</p>
                 </div>
