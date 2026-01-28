@@ -31,12 +31,13 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::middleware(['auth', 'verified', 'customer'])->group(function () {
+// Route::middleware(['auth', 'verified', 'customer'])->group(function () {
+Route::middleware(['auth', 'customer'])->group(function () {
     Route::get('/dashboard', [HomeController::class,'login_home'])->name('dashboard');
 
 Route::get('myorders', [HomeController::class,'myorders']);
 
-route::get('add_cart/{id}', [HomeController::class,'add_cart']);
+route::post('add_cart/{id}', [HomeController::class,'add_cart']);
 
 route::get('mycart', [HomeController::class,'mycart']);
 
@@ -45,6 +46,10 @@ route::get('delete_cart/{id}', [HomeController::class,'delete_cart']);
 route::get('delete_myorder/{id}', [HomeController::class,'delete_myorders']);
 
 route::post('confirm_order', [HomeController::class,'confirm_order']);
+
+Route::get('products_search', [HomeController::class,'product_search']);
+
+Route::get('receipt/{id}', [HomeController::class,'print_pdf'])->name('receipt');
 
 Route::get('stripe',[HomeController::class, 'stripe']);
 Route::post('stripe',[HomeController::class, 'stripePost'])->name('stripe.post');
@@ -70,11 +75,11 @@ Route::get('delete_category/{id}', [AdminController::class,'delete_category']);
 Route::get('edit_category/{id}', [AdminController::class,'edit_category']);
 Route::post('update_category/{id}', [AdminController::class,'update_category']);
 
-Route::get('add_product', [AdminController::class,'add_product']);
+Route::get('add_product', [AdminController::class,'add_product'])->name('product.add');
 
 Route::post('upload_product', [AdminController::class,'upload_product']);
 
-Route::get('view_product', [AdminController::class,'view_product']);
+Route::get('view_product', [AdminController::class,'view_product'])->name('products');
 
 Route::get('delete_product/{id}', [AdminController::class,'delete_product']);
 

@@ -3,7 +3,7 @@
       <div class="heading_container heading_center">
         <h2>
           Contact Us
-        </h2> 
+        </h2>
       </div>
     </div>
     <div class="container container-bg">
@@ -19,26 +19,26 @@
           <form action="{{ url('/send-message') }}" method="POST">
             @csrf
             <div>
-              <input type="text" name="name" placeholder="Name" />
+              <input type="text"  class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Name" value="{{ old('name') }}" />
               @error('name')
                 <p class="text-danger"> {{$message}} </p>
               @enderror
             </div>
             <div>
-              <input type="email" name="email" placeholder="Email" />
+              <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Email" value="{{ old('email') }}" />
                             @error('email')
                 <p class="text-danger"> {{$message}} </p>
               @enderror
             </div>
 
             <div>
-              <input type="text" name="phone" placeholder="Phone" />
+              <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" placeholder="Phone" value="{{ old('phone') }}" />
                             @error('phone')
                 <p class="text-danger"> {{$message}} </p>
               @enderror
             </div>
             <div>
-              <input type="text" name="message" class="message-box" placeholder="Message" />
+              <input type="text" class="form-control @error('message') is-invalid @enderror" name="message" class="message-box" placeholder="Message" value="{{ old('message') }}" />
                             @error('message')
                 <p class="text-danger"> {{$message}} </p>
               @enderror
@@ -58,7 +58,7 @@
 
   <!-- end contact section -->
 
-   
+
 
   <!-- info section -->
 
@@ -142,6 +142,6 @@
         </p>
       </div>
     </footer>
-   
+
 
   </section>

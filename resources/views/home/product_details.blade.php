@@ -24,7 +24,7 @@
 
         .detail-box {
             text-align: left;
-            padding: 15px;
+            padding: 8px;
             font-size: 16px;
         }
 
@@ -34,7 +34,7 @@
         }
 
         .btn-box {
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .btn-box a {
@@ -58,11 +58,13 @@
         @include('home.header')
     </div>
 
+    
+
     <section class="shop_section layout_padding">
         <div class="container">
             <h2>{{ $data->title }}</h2>
             <img class="product-image" src="/images/{{ $data->image }}" alt="{{ $data->title }}">
-            
+
             <div class="detail-box">
                 <h6>Price: <span>${{ $data->price }}</span></h6>
                 <h6>Category: <span>{{ $data->category }}</span></h6>

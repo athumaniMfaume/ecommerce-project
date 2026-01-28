@@ -1,144 +1,151 @@
 <!DOCTYPE html>
 <html>
-    <!-- head -->
-     <head>
-   @include('admin.css')
+<head>
+    @include('admin.css')
 
-   <style  type="text/css">
+    <style>
+        body {
+            background: #121212;
+        }
 
-      input[type='text']
-      {
-        width: 400px;
-        height: 50px;
+        .form-card {
+            background: #1f2937;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.4);
+            max-width: 600px;
+            margin: 30px auto;
+        }
 
-      }
+        .form-card input[type='text'] {
+            height: 45px;
+        }
 
-      .div_deg{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 30px;
-      }
+        .table-card {
+            background: #1f2937;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.4);
+            margin: 30px auto;
+            max-width: 700px;
+        }
 
-      .table_deg{
-        text-align: center;
-        margin: auto;
-        border: 2px solid yellowgreen;
-        margin-top: 50px;
-        width: 600px;
-      }
+        .table thead {
+            background: #0d6efd;
+            color: white;
+        }
 
-      th{
-        background-color: skyblue;
-        padding: 15px;
-        font-size: 20px;
-        font-weight: bold;
-        color: white;
-      }
+        .table tbody tr:hover {
+            background: #2c3e50;
+            transition: 0.3s;
+        }
 
-      td{
-        color: white;
-        padding: 10px;
-        border: 1px solid skyblue;
-      }
+        .btn {
+            min-width: 70px;
+        }
 
-
-
-
+        .page-title {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+        }
 
     </style>
-    </head>
-   <!-- end  head -->
-  <body>
-    <!-- header -->
-    @include('admin.header')
-    <!-- end header -->
-   
-    <div class="d-flex align-items-stretch">
+</head>
 
-      <!-- Sidebar Navigation-->
-      @include('admin.sidebar')
-      <!-- Sidebar Navigation end-->
+<body>
 
-      <div class="page-content">
+@include('admin.header')
+
+<div class="d-flex align-items-stretch">
+    @include('admin.sidebar')
+
+    <div class="page-content">
         <div class="page-header">
-          <div class="container-fluid">
-            <h1 style="color: white;"> Add Category</h1>
-            <div class="div_deg">
-              <form action="{{url('add_category')}}" method="post">
-                @csrf
-                <div>
-                    <input type="text" name="category_name">
-                    <input class="btn btn-primary" type="submit" value="Add Category">
+            <div class="container-fluid">
+
+                <h2 class="page-title">Add Category</h2>
+
+                <!-- Form Card -->
+                <div class="form-card">
+                    <form action="{{ url('add_category') }}" method="post" class="d-flex gap-2">
+                        @csrf
+                        <input type="text" name="category_name" class="form-control" placeholder="Enter Category Name" value="{{ old('category_name') }}">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </form>
                     @error('category_name')
-                        <p class="text-danger">{{$message}}</p>
+                        <p class="text-danger mt-2">{{ $message }}</p>
                     @enderror
-                </div>   
-              </form>
-           </div>  
-           <div>  
+                </div>
 
-             <table class="table_deg">
-              <tr>
-                <th> Category Name </th>
-                <th> Edit </th>
-                <th> Delete</th>
-              </tr>
+                <!-- Table Card -->
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover align-middle text-center text-white">
+                            <thead>
+                                <tr>
+                                    <th>Category Name</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($data as $item)
+                                <tr>
+                                    <td>{{ $item->category_name }}</td>
+                                    <td>
+                                        <a href="{{ url('edit_category', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ url('delete_category', $item->id) }}" onclick="confirmation(event)" class="btn btn-sm btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-              @foreach($data as $datas)
-              <tr>
-              
-                <td>{{$datas->category_name}}</td>
-                <td><a class="btn btn-success" href="{{url('edit_category', $datas->id)}}">Edit</a></td>
-                <td><a class="btn btn-danger" onclick="confirmation(event)" href="{{url('delete_category', $datas->id)}}">Delete</a></td>
-              </tr>
+                <!-- Pagination -->
+                <div class="d-flex justify-content-center mt-3">
+                    {{ $data->onEachSide(1)->links() }}
+                </div>
 
-              @endforeach
-
-               
-             </table>
-           </div> 
-           <div class="div_deg">
-             {{$data->onEachSide(1)->links()}}
-           </div> 
-          </div>
-      </div>
+            </div>
+        </div>
     </div>
-    <!-- JavaScript files-->
-    <script type="text/javascript">
-      function confirmation(ev){
+</div>
+
+<!-- SweetAlert Delete Confirmation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<script>
+    function confirmation(ev){
         ev.preventDefault();
-        var urlToRedirect=ev.currentTarget.getAttribute('href');
-        console.log(urlToRedirect);
-
+        var urlToRedirect = ev.currentTarget.getAttribute('href');
         swal({
-
-          title:"Are You Sure To Delete This",
-          text:"This Delete Will be Permanently",
-          icon:"warning",
-          buttons:true,
-          dangerMode:true,
-
-        })
-
-        .then((willCancel)=>{
-          if (willCancel) {
-            window.location.href=urlToRedirect;
-          }
-
+            title: "Are you sure to delete this?",
+            text: "This will be permanently deleted!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if(willDelete) {
+                window.location.href = urlToRedirect;
+            }
         });
-      }
-    </script>
+    }
+</script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+<!-- JS Files -->
+<script src="{{asset('/admincss/vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('/admincss/vendor/popper.js/umd/popper.min.js')}}"></script>
+<script src="{{asset('/admincss/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('/admincss/vendor/jquery.cookie/jquery.cookie.js')}}"></script>
+<script src="{{asset('/admincss/vendor/chart.js/Chart.min.js')}}"></script>
+<script src="{{asset('/admincss/vendor/jquery-validation/jquery.validate.min.js')}}"></script>
+<script src="{{asset('/admincss/js/charts-home.js')}}"></script>
+<script src="{{asset('/admincss/js/front.js')}}"></script>
 
-    <script src="{{asset('/admincss/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('/admincss/vendor/popper.js/umd/popper.min.js')}}"> </script>
-    <script src="{{asset('/admincss/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('/admincss/vendor/jquery.cookie/jquery.cookie.js')}}"> </script>
-    <script src="{{asset('/admincss/vendor/chart.js/Chart.min.js')}}"></script>
-    <script src="{{asset('/admincss/vendor/jquery-validation/jquery.validate.min.js')}}"></script>
-    <script src="{{asset('/admincss/js/charts-home.js')}}"></script>
-    <script src="{{asset('/admincss/js/front.js')}}"></script>
-  </body>
+</body>
 </html>
+

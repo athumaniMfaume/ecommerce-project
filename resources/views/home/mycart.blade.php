@@ -116,6 +116,7 @@
                     <th>Product Title</th>
                     <th>Price</th>
                     <th>Image</th>
+                    <th>Quantity</th>
                     <th>Remove</th>
                 </tr>
 
@@ -124,9 +125,11 @@
                 @foreach($carts as $cart)
                     <tr>
                         <td>{{$cart->product->title}}</td>
-                        <td>${{$cart->product->price}}</td>
+                        <td>${{$cart->product->price * $cart->quantity}}</td>
                         <td><img width="100" src="/images/{{$cart->product->image}}"></td>
+                        <td>{{$cart->quantity}}</td>
                         <td><a class="btn btn-danger" onclick="confirm('are you want to Delete this order?')" href="{{url('delete_cart', $cart->id)}}">Remove</a></td>
+
                     </tr>
                     <?php $value += $cart->product->price; ?>
                 @endforeach

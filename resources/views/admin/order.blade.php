@@ -1,13 +1,48 @@
 <!DOCTYPE html>
 <html>
-    <!-- head -->
+<head>
     @include('admin.css')
-    <style type="text/css">
+    <style>
         body {
             background-color: #222;
             color: white;
         }
 
+        /* Search Section */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .search-container input[type="search"] {
+            width: 300px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid #0d6efd;
+            background-color: #1f2937;
+            color: white;
+            font-size: 16px;
+        }
+
+        .search-container button {
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .search-container button:hover {
+            background-color: #0b5ed7;
+        }
+
+        /* Table Styling */
         .table-container {
             display: flex;
             justify-content: center;
@@ -15,72 +50,30 @@
         }
 
         table {
-            width: 80%;
+            width: 90%;
             border-collapse: collapse;
-            background-color: #333;
+            background-color: #1f2937;
             color: white;
             text-align: center;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
 
-         <style  type="text/css">
-
-      input[type='text']
-      {
-        width: 400px;
-        height: 50px;
-
-      }
-
-      input[type='search']
-      {
-        width: 500px;
-        height: 60px;
-        margin-left: 50px;
-
-      }
-
-      .div_deg{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 30px;
-      }
-
-      .table_deg{
-        text-align: center;
-        margin: auto;
-        border: 2px solid yellowgreen;
-        margin-top: 50px;
-        width: 600px;
-      }
-
-      th{
-        background-color: skyblue;
-        padding: 15px;
-        font-size: 20px;
-        font-weight: bold;
-        color: white;
-      }
-
-      td{
-        color: white;
-        padding: 10px;
-        border: 1px solid skyblue;
-      }
+        thead tr {
+            background-color: #0d6efd;
+            font-weight: bold;
+        }
 
         th, td {
-            padding: 10px;
-            border: 1px solid white;
+            padding: 12px;
+            border: 1px solid #333;
             word-wrap: break-word;
         }
 
-        th {
-            background-color: #444;
-            font-size: 18px;
-            font-weight: bold;
+        tbody tr:hover {
+            background-color: #2c3e50;
+            transition: 0.3s;
         }
 
         td img {
@@ -88,31 +81,22 @@
             border-radius: 5px;
         }
 
-        .status-red { color: red; }
-        .status-blue { color: skyblue; }
-        .status-yellow { color: yellow; }
+        .status-red { color: red; font-weight:bold; }
+        .status-blue { color: skyblue; font-weight:bold; }
+        .status-yellow { color: yellow; font-weight:bold; }
 
         .btn {
             padding: 6px 12px;
             font-size: 14px;
+            border-radius: 4px;
+            text-decoration: none;
         }
 
-        .btn-primary { background-color: blue; }
-        .btn-success { background-color: green; }
-        .btn-secondary { background-color: gray; }
+        .btn-primary { background-color: #0d6efd; color:white; border:none; }
+        .btn-success { background-color: green; color:white; border:none; }
+        .btn-secondary { background-color: gray; color:white; border:none; }
 
-        @media (max-width: 768px) {
-            table {
-                width: 95%;
-            }
-
-            th, td {
-                font-size: 14px;
-                padding: 6px;
-            }
-        }
-
-        /* Pagination Styling */
+        /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
@@ -132,11 +116,11 @@
         }
 
         .pagination a:hover {
-            background-color: skyblue;
+            background-color: #0d6efd;
         }
 
         .pagination .active {
-            background-color: skyblue;
+            background-color: #0d6efd;
             color: black;
         }
 
@@ -144,82 +128,89 @@
             color: #ccc;
             cursor: not-allowed;
         }
+
+        @media (max-width: 768px) {
+            table { width: 95%; }
+            th, td { font-size: 14px; padding: 6px; }
+            .search-container { flex-direction: column; gap: 10px; }
+            .search-container input[type="search"] { width: 80%; }
+        }
     </style>
-    <!-- end head -->
+</head>
 <body>
-    <!-- header -->
     @include('admin.header')
-    <!-- end header -->
 
     <div class="d-flex align-items-stretch">
-        <!-- Sidebar Navigation-->
         @include('admin.sidebar')
-        <!-- Sidebar Navigation end-->
 
         <div class="page-content">
             <div class="container-fluid">
-              <br>
-<form action="{{ url('order_search') }}" method="GET">
-    @csrf
-    <input type="search" name="search" value="{{ request()->search }}" placeholder="Search Orders">
-    <input type="submit" class="btn btn-secondary" value="Search">
-</form>
-@error('search')
-<div>
-  <p class="text-danger">{{ $message }}</p>
-  </div>
-@enderror
 
+                <!-- Search Section -->
+                <form action="{{ url('order_search') }}" method="GET" class="search-container">
+                    @csrf
+                    <input type="search" name="search" value="{{ request()->search }}" placeholder="Search Orders">
+                    <button type="submit">Search</button>
+                </form>
+                @error('search')
+                    <p class="text-danger text-center">{{ $message }}</p>
+                @enderror
+
+                <!-- Table Section -->
                 <div class="table-container">
                     <table>
-                        <tr>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>Phone</th>
-                            <th>Title</th>
-                            <th>Price</th>
-                            <th>Image</th>
-                            <th>Status</th>
-                            <th>Change Status</th>
-                            <th>Print Pdf</th>
-                        </tr>
-
-                        @foreach($datas as $data)
-                        <tr>
-                            <td>{{$data->name}}</td>
-                            <td>{{$data->rec_address}}</td>
-                            <td>{{$data->phone}}</td>
-                            <td>{{$data->product->title}}</td>
-                            <td>{{$data->product->price}}</td>
-                            <td>
-                                <img src="/images/{{$data->product->image}}">
-                            </td>
-                            <td>
-                                <span class="{{ $data->status == 'in progress' ? 'status-red' : ($data->status == 'On the way' ? 'status-blue' : 'status-yellow') }}">
-                                    {{$data->status}}
-                                </span>
-                            </td>
-                            <td>
-                                <a class="btn btn-primary" href="{{url('on_the_way', $data->id)}}">On the way</a>
-                                <a class="btn btn-success" href="{{url('delivered', $data->id)}}">Deliver</a>
-                            </td>
-                            <td>
-                                <a class="btn btn-secondary" href="{{url('print_pdf', $data->id)}}">Print PDF</a>
-                            </td>
-                        </tr>
-                        @endforeach
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>Phone</th>
+                                <th>Title</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Image</th>
+                                <th>Status</th>
+                                <th>Change Status</th>
+                                <th>Print PDF</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($datas as $data)
+                            <tr>
+                                <td>{{ $data->name }}</td>
+                                <td>{{ $data->rec_address }}</td>
+                                <td>{{ $data->phone }}</td>
+                                <td>{{ $data->product->title }}</td>
+                                <td>{{ $data->product->price * $data->quantity }}</td>
+                                <td>{{ $data->quantity }}</td>
+                                <td><img src="/images/{{ $data->product->image }}"></td>
+                                <td>
+                                    <span class="{{ $data->status == 'in progress' ? 'status-red' : ($data->status == 'On the way' ? 'status-blue' : 'status-yellow') }}">
+                                        {{ $data->status }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" href="{{ url('on_the_way', $data->id) }}">On the way</a>
+                                    <a class="btn btn-success" href="{{ url('delivered', $data->id) }}">Deliver</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-secondary" href="{{ url('print_pdf', $data->id) }}">Print PDF</a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
 
-                <!-- Pagination Links -->
+                <!-- Pagination -->
                 <div class="pagination">
                     {{ $datas->links() }}
                 </div>
+
             </div>
         </div>
     </div>
 
-    <!-- JavaScript files -->
+    <!-- JS Files -->
     <script src="{{asset('/admincss/vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('/admincss/vendor/popper.js/umd/popper.min.js')}}"></script>
     <script src="{{asset('/admincss/vendor/bootstrap/js/bootstrap.min.js')}}"></script>

@@ -50,12 +50,15 @@
         <hr>
 
         <h3>Customer: {{ $data->name }}</h3>
-        <h3>Phone: {{ $data->phone }}</h3>
-        <h3>Address: {{ $data->rec_address }}</h3>
+        <h3>Phone: {{ $data->phone?? 'n/a' }}</h3>
+        <h3>Address: {{ $data->rec_address?? 'n/a' }}</h3>
         <hr>
 
         <h3>Product: {{ $data->product->title }}</h3>
-        <h3>Price: ${{ number_format($data->product->price, 2) }}</h3>
+        <h3>Price: Tsh {{ number_format($data->product->price * $data->quantity, 2) }}/=</h3>
+        <h3>Quantity: {{ $data->quantity }}</h3>
+        <h3>Status: {{ $data->status }}</h3>
+        <h3>Payment: {{ $data->payment_status }}</h3>
         <hr>
 
         <div class="product-image">

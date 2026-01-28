@@ -1,5 +1,5 @@
 
-        <header class="header">   
+        <header class="header">
       <nav class="navbar navbar-expand-lg">
         <div class="search-panel">
           <div class="search-inner d-flex align-items-center justify-content-center">
@@ -20,9 +20,9 @@
             <!-- Sidebar Toggle Btn-->
             <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
           </div>
-          <div class="right-menu list-inline no-margin-bottom">    
-          
-         
+          <div class="right-menu list-inline no-margin-bottom">
+
+
             <li class="list-inline-item">
     <a href="{{ route('profile.edit') }}" class="nav-link">
         <i class="fa fa-lock"></i> Change Password
@@ -30,10 +30,10 @@
 </li>
 
             <!-- Log out               -->
-            <div class="list-inline-item logout">                   
+            <div class="list-inline-item logout">
             <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <input type="submit" value="Logout">
+                    <input class="btn btn-danger" type="submit" value="Logout">
 
                 </form>
 

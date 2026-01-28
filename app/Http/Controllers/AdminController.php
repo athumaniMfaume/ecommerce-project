@@ -37,8 +37,8 @@ Mail::to($validated['email'])->send(new MessageSent(
 }
 
     public function view_category()
-    {   
-        $data= Category::paginate(3);
+    {
+        $data= Category::latest()->paginate(3);
         return view('admin.category', compact('data'));
     }
 
@@ -46,9 +46,9 @@ Mail::to($validated['email'])->send(new MessageSent(
     {
 
         $request->validate([
-           
+
             'category_name' => 'required|regex:/^[a-zA-Z\s]+$/|unique:categories,category_name|max:255',
-            
+
         ]);
         $category = new Category;
         $category->category_name = $request->category_name;
@@ -75,9 +75,9 @@ Mail::to($validated['email'])->send(new MessageSent(
     {
 
         $request->validate([
-           
+
             'category' => 'sometimes|regex:/^[a-zA-Z\s]+$/|max:255|unique:categories,category_name,'.$id,
-            
+
         ]);
         $data = Category::find($id);
         $data->category_name = $request->category;
@@ -89,8 +89,8 @@ Mail::to($validated['email'])->send(new MessageSent(
 
     public function add_product(Request $request)
     {
-        $category = Category::all();
-        return view('admin.add_product', compact('category'));
+        $categories = Category::all();
+        return view('admin.add_product', compact('categories'));
     }
 
     public function upload_product(Request $request)
@@ -118,12 +118,12 @@ Mail::to($validated['email'])->send(new MessageSent(
         }
         $data->save();
         toastr()->timeOut(10000)->closeButton()->addSuccess('Product Added Successfuly');
-        return redirect()->back();
+        return redirect()->route('products');
     }
 
     public function view_product()
-    {   
-        $product = Product::paginate(3);
+    {
+        $product = Product::latest()->paginate(3);
         return view('admin.view_product', compact('product'));
     }
 
@@ -138,7 +138,7 @@ Mail::to($validated['email'])->send(new MessageSent(
 
         $data->delete();
         toastr()->timeOut(10000)->closeButton()->addSuccess('Product Delete Successfuly');
-        return redirect()->back();
+        return redirect()->route('products');
     }
 
     public function update_product(Request $request, $id)
@@ -179,7 +179,7 @@ Mail::to($validated['email'])->send(new MessageSent(
         }
         $data->save();
         toastr()->timeOut(10000)->closeButton()->addSuccess('Product Update Successfuly');
-        return redirect('/view_product');
+        return redirect()->route('products');
         }
 
     public function product_search(Request $request)
@@ -195,7 +195,7 @@ Mail::to($validated['email'])->send(new MessageSent(
     }
 
     public function view_order()
-    {   
+    {
         $datas = Order::paginate(5);
         return view('admin.order', compact('datas'));
     }
@@ -215,7 +215,7 @@ Mail::to($validated['email'])->send(new MessageSent(
     }
 
      public function on_the_way($id)
-    {   
+    {
         $data = Order::find($id);
         $data->status = 'On the way';
         $data->save();
@@ -223,7 +223,7 @@ Mail::to($validated['email'])->send(new MessageSent(
     }
 
     public function delivered($id)
-    {   
+    {
         $data = Order::find($id);
         $data->status = 'Delivered';
         $data->save();
@@ -231,22 +231,25 @@ Mail::to($validated['email'])->send(new MessageSent(
     }
 
     public function print_pdf($id)
-     {   
+     {
        $data = Order::find($id);
        $imagePath = public_path('images/' . $data->product->image);
-    
+
        // Generate the filename: CustomerName_Invoice.pdf
        $fileName = str_replace(' ', '_', $data->name) . '_Invoice.pdf';
 
        // Generate the PDF
        $pdf = Pdf::loadView('admin.invoice', compact('data', 'imagePath'));
 
+
+
+
        // Return the PDF as a download with the custom filename
        return $pdf->download($fileName);
     }
 
 
-    
+
 
 
 }

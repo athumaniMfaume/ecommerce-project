@@ -10,9 +10,9 @@ class ContactController extends Controller
     public function sendMessage(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|regex:/^[a-zA-Z\s]+$/|',
             'email' => 'required|email|max:255',
-            'phone' => 'nullable|string|max:20',
+            'phone' => 'required|string|max:20',
             'message' => 'required|string',
         ]);
 

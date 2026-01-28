@@ -100,18 +100,27 @@
                 <tr>
                     <th>Product Title</th>
                     <th>Price</th>
+                    <th>Quantity</th>
                     <th>Delivery Status</th>
                     <th>Image</th>
                     <th>Action</th>
+
                 </tr>
 
                 @foreach($orders as $order)
                 <tr>
                     <td>{{$order->product->title}}</td>
-                    <td>{{$order->product->price}}</td>
+                    <td>{{$order->product->price * $order->quantity}}</td>
+                    <td>{{$order->quantity }}</td>
+
                     <td>{{$order->status}}</td>
                     <td><img height="100" width="100" src="/images/{{$order->product->image}}"></td>
-                    <td><a class="btn btn-danger" onclick="confirm('are you want to Delete this order?')" href="{{url('delete_myorder', $order->id)}}">Remove</a></td>
+                    <td>
+
+                    <a class="btn btn-sm btn-secondary  mb-2" href="{{route('receipt', $order->id)}}">Receipt</a>
+
+                    <a class="btn btn-sm btn-danger" onclick="confirm('are you want to Delete this order?')" href="{{url('delete_myorder', $order->id)}}">Remove</a>
+                    </td>
                 </tr>
                 @endforeach
             </table>

@@ -18,7 +18,7 @@
               <a class="nav-link" href="{{url('/shop')}}">
                 Shop
               </a>
-            </li> 
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="{{url('/why')}}">
                 Why Us
@@ -36,8 +36,22 @@
           <div class="user_option">
 
           @if (Route::has('login'))
-  @auth
+  {{-- @auth
     @if (auth()->user()->hasVerifiedEmail())
+      <a href="{{ url('myorders') }}">
+          My Orders
+      </a>
+
+      <a href="{{ url('mycart') }}">
+          <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+          [{{ $count }}]
+      </a>
+    @else
+      <span style="color: orange;">Please verify your email to access orders & cart.</span>
+    @endif --}}
+
+      @auth
+    @if (auth()->user())
       <a href="{{ url('myorders') }}">
           My Orders
       </a>
@@ -66,10 +80,10 @@
     </a>
   @endauth
 @endif
- 
 
-           
-            
+
+
+
           <!--  <form class="form-inline ">
               <button class="btn nav_search-btn" type="submit">
                 <i class="fa fa-search" aria-hidden="true"></i>

@@ -1,94 +1,89 @@
 <!DOCTYPE html>
 <html>
-    <!-- head -->
-    <head>
-   @include('admin.css')
-    <style  type="text/css">
+<head>
+    @include('admin.css')
 
-      input[type='text']
-      {
-        width: 400px;
-        height: 50px;
+    <style>
+        body {
+            background: #121212;
+        }
 
-      }
+        .form-card {
+            background: #1f2937;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            max-width: 500px;
+            margin: 50px auto;
+        }
 
-      .div_deg{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 30px;
-      }
+        .form-card input[type='text'] {
+            height: 45px;
+            width: 100%;
+            padding: 0 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
 
-      .table_deg{
-        text-align: center;
-        margin: auto;
-        border: 2px solid yellowgreen;
-        margin-top: 50px;
-        width: 600px;
-      }
+        .form-card button {
+            margin-top: 15px;
+            width: 100%;
+        }
 
-      th{
-        background-color: skyblue;
-        padding: 15px;
-        font-size: 20px;
-        font-weight: bold;
-        color: white;
-      }
+        .page-title {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
 
-      td{
-        color: white;
-        padding: 10px;
-        border: 1px solid skyblue;
-      }
-
-
-
-
+        .text-danger {
+            margin-top: 5px;
+            font-size: 14px;
+        }
 
     </style>
-   </head>
-   <!-- end  head -->
-  <body>
-    <!-- header -->
-    @include('admin.header')
-    <!-- end header -->
-   
-    <div class="d-flex align-items-stretch">
+</head>
+<body>
 
-      <!-- Sidebar Navigation-->
-      @include('admin.sidebar')
-      <!-- Sidebar Navigation end-->
+@include('admin.header')
 
-      <div class="page-content">
+<div class="d-flex align-items-stretch">
+    @include('admin.sidebar')
+
+    <div class="page-content">
         <div class="page-header">
-          <div class="container-fluid">
-            <h1 style="color: white"> Update Category</h1>
-            <div class="div_deg">
-              
+            <div class="container-fluid">
 
-              <form action="{{url('update_category', $data->id)}}" method="post">
-                @csrf
-                <input type="text" name="category" value="{{$data->category_name}}">
-                <input class="btn btn-primary" type="submit" name="update category" value="Update Category">
-                  @error('category')
-                  <p class="text-danger">{{$message}}</p>
-              @enderror
-              </form><br>
+                <h2 class="page-title">Update Category</h2>
 
+                <!-- Update Form Card -->
+                <div class="form-card">
+                    <form action="{{ url('update_category', $data->id) }}" method="post">
+                        @csrf
+                        <label for="category" class="text-white mb-2">Category Name</label>
+                        <input type="text" id="category" name="category" value="{{ $data->category_name }}">
+                        @error('category')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                        <button type="submit" class="btn btn-primary">Update Category</button>
+                    </form>
+                </div>
 
             </div>
-
-          </div>
-      </div>
+        </div>
     </div>
-    <!-- JavaScript files-->
-    <script src="{{asset('/admincss/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('/admincss/vendor/popper.js/umd/popper.min.js')}}"> </script>
-    <script src="{{asset('/admincss/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('/admincss/vendor/jquery.cookie/jquery.cookie.js')}}"> </script>
-    <script src="{{asset('/admincss/vendor/chart.js/Chart.min.js')}}"></script>
-    <script src="{{asset('/admincss/vendor/jquery-validation/jquery.validate.min.js')}}"></script>
-    <script src="{{asset('/admincss/js/charts-home.js')}}"></script>
-    <script src="{{asset('/admincss/js/front.js')}}"></script>
-  </body>
+</div>
+
+<!-- JS Files -->
+<script src="{{asset('/admincss/vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('/admincss/vendor/popper.js/umd/popper.min.js')}}"></script>
+<script src="{{asset('/admincss/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('/admincss/vendor/jquery.cookie/jquery.cookie.js')}}"></script>
+<script src="{{asset('/admincss/vendor/chart.js/Chart.min.js')}}"></script>
+<script src="{{asset('/admincss/vendor/jquery-validation/jquery.validate.min.js')}}"></script>
+<script src="{{asset('/admincss/js/charts-home.js')}}"></script>
+<script src="{{asset('/admincss/js/front.js')}}"></script>
+
+</body>
 </html>
