@@ -1,60 +1,40 @@
-# E-Commerce Project
+E-Commerce Project
+This is a full-stack e-commerce web application developed using Laravel 12, designed to manage products, categories, orders, and customers efficiently. The system has two user roles: Admin and Normal User, each with specific access and duties.
 
-This is a **full-stack e-commerce web application** developed using **Laravel 12**, designed to manage products, categories, orders, and customers efficiently. The system has **two user roles**: Admin and Normal User, each with specific access and duties.  
+Admin: Manages the system, products, categories, users, and orders.
+Normal User: Can browse products, add to cart, and place orders.
+Repository
+GitHub Repo
 
-- **Admin**: Manages the system, products, categories, users, and orders.  
-- **Normal User**: Can browse products, add to cart, and place orders.
+System Credentials
+Admin Account:
 
----
-
-## Repository
-
-[GitHub Repo](https://github.com/athumaniMfaume/ecommerce-project.git)
-
----
-
-## System Credentials
-
-**Admin Account:**  
-- Email: `admin@gmail.com`  
-- Password: `12345678`  
-
+Email: admin@gmail.com
+Password: 12345678
 Normal users can register through the system interface.
 
----
-
-## Features
-
-### User Features
-- Browse products by category  
-- View product details  
-- Add products to cart  
-- Place orders  
-- User authentication (register/login)  
-
-### Admin Features
-- Dashboard overview  
-- Manage products (create, update, delete)  
-- Manage categories  
-- View and manage orders  
-- Manage users  
-- Role-based access control  
-
----
-
-## Technologies Used
-- **Backend:** Laravel 12 (PHP Framework)  
-- **Frontend:** HTML, CSS, JavaScript, Bootstrap  
-- **Database:** MySQL  
-- **Version Control:** Git & GitHub  
-- **Other:** Font Awesome, Poppins Font  
-
----
-
-## Installation
-
-1. Clone the repository:
-```bash
+Features
+User Features
+Browse products by category
+View product details
+Add products to cart
+Place orders
+User authentication (register/login)
+Admin Features
+Dashboard overview
+Manage products (create, update, delete)
+Manage categories
+View and manage orders
+Manage users
+Role-based access control
+Technologies Used
+Backend: Laravel 12 (PHP Framework)
+Frontend: HTML, CSS, JavaScript, Bootstrap
+Database: MySQL
+Version Control: Git & GitHub
+Other: Font Awesome, Poppins Font
+Installation
+Clone the repository:
 git clone https://github.com/athumaniMfaume/ecommerce-project.git
 
 2. Navigate to the project directory:
